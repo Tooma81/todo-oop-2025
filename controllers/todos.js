@@ -50,9 +50,7 @@ class todoController {
 
     deleteTodo(req,res) {
         const todoId = req.params.id
-        const updatedTask = req.body.task
 
-        console.log(req.body)
         console.log(req.params)
 
         const todoIndex = this.TODOS.findIndex((todo) => todo.id === todoId)
