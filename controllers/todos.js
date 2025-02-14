@@ -38,7 +38,7 @@ class todoController {
         res.json({tasks: this.TODOS})
     }
 
-    updateTodo(req, res) {
+    async updateTodo(req, res) {
         const todoId = req.params.id
         const updatedTask = req.body.task
 
@@ -55,13 +55,15 @@ class todoController {
         }
 
         this.TODOS[todoIndex] = new Todo(this.TODOS[todoIndex].id, updatedTask)
+        await fileManager.writeFile('./data/todos.json', this.TODOS)
+
         res.json({
             message: 'todo is updated',
             updatedTask: this.TODOS[todoIndex]
         })
     }
 
-    deleteTodo(req,res) {
+    async deleteTodo(req,res) {
         const todoId = req.params.id
 
         console.log(req.params)
@@ -76,6 +78,8 @@ class todoController {
         }
 
         this.TODOS.splice(todoIndex, 1)
+        await fileManager.writeFile('./data/todos.json', this.TODOS)
+
         res.json({
             message: 'todo is deleted'
         })
